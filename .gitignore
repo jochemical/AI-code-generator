@@ -1,2 +1,9 @@
-.env
+
+# Personal notes
 tasks.txt
+
+# Python cache files
+__pycache__
+
+# Environmental files
+.env
