@@ -3,7 +3,8 @@
 tasks.txt
 
 # Python cache files
-__pycache__
+__pycache__/
+
 
 # Environmental files
 .env
