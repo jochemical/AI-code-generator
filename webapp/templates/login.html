@@ -1,0 +1,18 @@
+<div class="col-md-6 offset-md-3">
+	<h1> Login </h1>
+	<br/>
+	<form method="POST" action="{% url 'login' %}">
+	{% csrf_token %}
+	<div class="form-group">
+		<input type="text" class='form-control' placeholder="Enter Username" name="username">
+		<br/>
+	</div>
+
+	<div class="form-group">
+		<input type="password" class='form-control' placeholder="Enter Password" name="password">
+		<br/>
+		<br/>
+
+		<button type="submit" class="btn btn-secondary">		Login
+		</button>
+	</div>

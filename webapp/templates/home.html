@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+	{% if response %}
+		<pre><code class='line-numbers language-{{lang}}'>
+	{{ response }}
+		</code></pre>
+		<br/><br/>
+
+		<form method=POST action="{% url 'home' %}">
+		{% csrf_token %}
+		<div class="mb-3">
+			<textarea class="form-control" name="code" 
+		  	placeholder="Fix My Code with A.I." rows="3"> 
+				{{ code }}
+			</textarea>
+		</div>
+
+		<select class="form-select" name="lang">
+			<option selected>Select Programming Language</option>
+		  	{% for lang in lang_list %}
+		  		<option value="{{ lang }}">{{ lang }}</option>
+		  	{% endfor %}
+		</select>
+
+		<br/><br/>
+
+		<button type="submit" class="btn btn-secondary">
+			Submit
+		</button>
+
+		</form>
+	{% else %}
+		<pre><code class='line-numbers language-python'>
+	# Your fixed code will be dispayed here.
+		</code></pre>
+		<br/>
+
+		<form method=POST action="{% url 'home' %}">
+			{% csrf_token %}
+			<div class="mb-3">
+  				<textarea class="form-control" name="code" placeholder="Fix My Code with A.I." rows="3"></textarea>
+			</div>
+
+			<select class="form-select" name="lang">
+			  <option selected>Select Programming Language</option>
+			  {% for lang in lang_list %}
+			  	<option value="{{ lang }}">{{ lang }}</option>
+			  {% endfor %}
+			</select>
+
+			<br/><br/>
+		    <button type="submit" class="btn btn-secondary">
+		    	Submit
+		    </button>
+		</form>
+	{% endif %}
+
+{% else %}
+ 	{% include 'login.html' %}		
+{% endif %}
+
+{% endblock %}

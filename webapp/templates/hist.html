@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if code %}
+	{% for prop in code %}
+		<span><i>Your input:</i></span>
+		<br/><br/>
+		<div class="text-block">
+			<pre>{{ prop.question }}</pre>(Programming language: <i>{{ prop.language }})</i>
+		</div>
+
+		<pre><code class='line-numbers language-{{prop.language }}'>
+	{{ prop.code_answer }}
+		</code><br/></pre>
+
+		<a href="{% url 'delete_past' prop.id %}" class='btn btn-outline-secondary btn-sm'>
+			Delete This
+		</a>
+		<br/><br/><br/>
+		<HR SIZE="5" />
+		<br/>	
+	{% endfor %}
+{% endif %}
+
+{% endblock%}
