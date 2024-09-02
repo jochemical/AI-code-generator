@@ -1,6 +1,11 @@
-# AI Code-Generator
+# A.I. Code-Generator
 
 Django web application to generate or debug code using A.I.
+Userdata is stored within SQLite database.
+Bootstrap is used to create the frontend framework.
+An openAI API Key must be added to the .env file to enable the A.I.-functionality.
+
+Functionality:
 
 1. First register and create an account.
 2. Login to your account.

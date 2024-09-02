@@ -12,33 +12,42 @@ import os
 # Function to get response from openAI
 def openAI_response(code, lang, task):
 
+	# Get API Key
+	api_key = os.getenv('API_KEY')
+
+	# If API Key is "None"
+	if not api_key:
+		print("API_KEY is not set or is empty")
+		response = "# OpenAI function is currently not available. First add an API key."
+		return response
+    	
 	# argument 'task' must be 'fix' or 'suggest'
 	if task == "fix":
 		AI_prompt = f"Respond only with code. Fix this {lang} code: (code)"
 	elif task == "suggest":
 		AI_prompt = f"Respond only with code. {code}"
-	else:
-		print("openAI_response() function did not get any task.")
-		response = "# OpenAI function is currently not available. First add an API key."
-		return response
 
-	# OpenAI Key
-	openai.api_key = os.getenv('API_KEY')
+	# Set OpenAI Key
+	openai.api_key = api_key
 
-	# Ceate OpenAI Instance
-	openai.Model.list()
+	# Ceate OpenAI instance	to print the different models
+	try:
+    	models = openai.Model.list()
+    	print(models)
+	except Exception as e:
+    	print(f"Error fetching models: {e}")
 
 	# Make an OpenAI request
 	try:
 		# Response is a python dict and must be parsed
 		response = openai.Completion.create(
-			engine = 'text-davince-003', # Use a cheaper one
+			model = 'text-ada-001', # 'text-davinci-003' is more expensive
 			prompt = AI_prompt,
-			temperature = 0, 
-			max_tokens = 100, # Keep low to stay cheap
-			top_p=1.0,
-			frequency_penalty =0.0,
-			presence_penalty=0.0,
+			temperature = 0, # High value means more creativity
+			max_tokens = 100, # Amount of (sub)words - keep low to stay cheap
+			top_p=1.0, # nucleas sampling, probability measure to select output
+			frequency_penalty =0.0, # High value means less repeatings
+			presence_penalty=0.0, # High value means a reduction of words which are used in the prompt
 			)
 
 		# Parse response
@@ -66,7 +75,7 @@ def home(request):
 			messages.success(request,"Hey! You forgot to pick a programming language...")
 			return render(request, 'home.html', {'lang_list':lang_list, 'code':code, 'lang':lang})	
 		else:
-			response = openAI_response(code, lang, "no_task") # change "no_task" to "fix" for openai
+			response = openAI_response(code, lang, "fix") # change "no_task" to "fix" for openai
 
 			# Save to database ()
 			record = Code(question=code, code_answer=response, language=lang, user=request.user)
@@ -91,7 +100,7 @@ def suggest(request):
 			messages.success(request,"Hey! You forgot to pick a programming language...")
 			return render(request, 'suggest.html', {'lang_list':lang_list, 'code':code, 'lang':lang})	
 		else:
-			response = openAI_response(code, lang, "no_task") # change "no_task" to "suggest" for openai
+			response = openAI_response(code, lang, "suggest") # change "no_task" to "suggest" for openai
 			
 			# Save to database ()
 			record = Code(question=code, code_answer=response, language=lang, user=request.user)
