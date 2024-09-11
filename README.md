@@ -12,3 +12,5 @@ Functionality:
 3. Input your code and submit for debugging
 4. Alternatively, you can input a code functionality and generate an operational code.
 5. Display previous generated code using the 'History' tab.
+
+This project is based on 'Create a Code Writing ChatGPT A.I. Site With Django Python' by John Elder from Codemy.
