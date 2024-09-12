@@ -30,12 +30,12 @@ def openAI_response(code, lang, task):
 	# Set OpenAI Key
 	openai.api_key = api_key
 
-	# Ceate OpenAI instance	to print the different models
+	# Create OpenAI instance to print the different models
 	try:
-    	models = openai.Model.list()
-    	print(models)
+		models = openai.Model.list()
+		print(models)
 	except Exception as e:
-    	print(f"Error fetching models: {e}")
+		print(f"Error fetching models: {e}")
 
 	# Make an OpenAI request
 	try:

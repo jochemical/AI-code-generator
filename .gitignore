@@ -7,3 +7,12 @@ __pycache__/
 
 # Environmental files
 .env
+
+# Database
+db.sqlite3
+
+# log files
+*.log
+
+# Server config
+Procfile
